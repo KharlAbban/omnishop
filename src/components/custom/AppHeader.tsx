@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { Search, Menu, ShoppingCart, User } from 'lucide-react'
+import { Search, Menu, ShoppingCart } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sheet"
 import Image from "next/image"
 import { APP_TITLE, meatCategories } from "@/utils/constants"
+import SignOutButton from "./SignOutButton"
 
 export function AppHeader() {
   return (
@@ -105,9 +106,7 @@ export function AppHeader() {
                 <span className="sr-only">Cart</span>
             </Link>
         </Button>
-        <Button variant="ghost" size="icon" title="Log out">
-            <User className="h-5 w-5" />
-        </Button>
+        <SignOutButton />
         </div>
       </div>
     </header>

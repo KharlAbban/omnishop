@@ -7,6 +7,8 @@ import { HeroSection } from "./custom/HeroSection";
 import { FeaturedProducts } from "./custom/FeaturedProducts";
 import { CategoriesSection } from "./custom/CategoriesSection";
 import { CartItemRow } from "./custom/CartItemRow";
+import LandingHeader from "./custom/LandingHeader";
+import SignOutButton from "./custom/SignOutButton";
 
 export {
     ProductImageGallery,
@@ -17,5 +19,7 @@ export {
     HeroSection,
     FeaturedProducts,
     CategoriesSection,
-    CartItemRow
+    CartItemRow,
+    LandingHeader,
+    SignOutButton
 }
