@@ -9,7 +9,7 @@ if (!backendUrl) throw new Error("No backend server url found!!");
 export const fetchAllProducts = createAsyncThunk(
     "products/fetchAllProducts",
     async () => {
-        const meatProducts = await axios.get(`${backendUrl}/products`);
+        const meatProducts = await axios.get(`${backendUrl}/api/products`);
         return meatProducts.data as ProductType[];
     }
 )

@@ -1,52 +1,28 @@
 "use server";
 
-import { z } from "zod";
-import { createSession, deleteSession } from "../lib/session";
-import { redirect } from "next/navigation";
+import { signOut } from '../../auth';
+import { signIn } from '../../auth';
+import { AuthError } from 'next-auth';
 
-const testUser = {
-  id: "1",
-  email: "randomuser@gmail.com",
-  password: "12345678",
-};
-
-const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }).trim(),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .trim(),
-});
-
-export async function logInUserAction(prevState: any, formData: FormData) {
-  const result = loginSchema.safeParse(Object.fromEntries(formData));
-
-  console.log(formData.get("email"));
-
-  if (!result.success) {
-    return {
-      errors: result.error.flatten().fieldErrors,
-    };
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
   }
-
-  console.log(result.data);
-
-  const { email, password } = result.data;
-
-  if (email !== testUser.email || password !== testUser.password) {
-    return {
-      errors: {
-        email: ["Invalid email or password"],
-      },
-    };
-  }
-
-  await createSession(testUser.id);
-
-  redirect("/home");
 }
 
-export async function logout() {
-  await deleteSession();
-  redirect("/login");
+export async function signOutUser () {
+  await signOut();
 }

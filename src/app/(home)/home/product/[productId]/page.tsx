@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ productId: string }> }) {
   const {productId} = await params;
-  const productInfo = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/products/${productId}`);
+  const productInfo = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/api/products/${productId}`);
 
   if (!productInfo) {
     return <p>Product not found</p>;
@@ -45,7 +45,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-              <ProductQuantitySelector productName={name} productImageUrl={images[0]} pricePerPound={pricePerPound} min={1} max={Math.floor(Number(poundsLeft) / Number(pricePerPound))} productId={productId} />
+              <ProductQuantitySelector
+                productName={name}
+                productImageUrl={images[0]}
+                pricePerPound={pricePerPound}
+                poundsLeft={poundsLeft}
+                productId={productId}
+              />
           
           </div>
         </div>

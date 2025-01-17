@@ -17,7 +17,7 @@ export function ProductImageGallery({ images }: ProductGalleryProps) {
     <div className="w-full">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg">
         <Image
-          src={images[currentImage] || "/placeholder.svg"}
+          src={"/meat_variety.jpg"}
           alt="Product image"
           className="object-cover"
           fill

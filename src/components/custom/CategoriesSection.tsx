@@ -20,12 +20,14 @@ export function CategoriesSection() {
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/0 p-6">
+              <div className="absolute inset-0 p-4">
                 <div className="flex h-full flex-col justify-end">
-                  <h3 className="mb-2 text-2xl font-bold">{category.title}</h3>
-                  <p className="text-muted-foreground">
-                    {category.description}
-                  </p>
+                  <div className="bg-theme-black/95 px-2 py-4 text-gray-50 rounded">
+                    <h3 className="mb-2 text-2xl font-bold">{category.title}</h3>
+                    <p className="text-muted-foreground">
+                      {category.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>
