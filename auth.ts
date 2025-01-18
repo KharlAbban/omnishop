@@ -16,7 +16,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
             // Verify from Node/Express backend for login credentials
-            const verifiedUser = await axios.post(`${backEndUrl}/auth/login`, parsedCredentials.data);
+            const verifiedUser = await axios.post(`${backEndUrl}/api/auth/login`, parsedCredentials.data);
 
             if (verifiedUser.status !== 200) {
               console.log('Invalid credentials');
