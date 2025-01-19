@@ -23,7 +23,7 @@ export function HeroSection() {
               <div className="relative aspect-[21/9] overflow-hidden bg-theme-black/50">
                 <div className="absolute inset-0 bg-theme-black/70 z-10"></div>
                 <Image
-                  src={slide.image || "/placeholder.svg"}
+                  src={slide.image || "/meat_variety.png"}
                   alt={slide.title}
                   fill
                   className="object-cover"
@@ -38,9 +38,7 @@ export function HeroSection() {
                       {slide.description}
                     </p>
                     <div className="flex gap-4">
-                      <Button asChild size="lg" className="border border-gray-50">
-                        <Link href="/products">{slide.cta}</Link>
-                      </Button>
+                      <Button size="lg" className="border border-gray-50 pointer-events-none">{slide.cta}</Button>
                     </div>
                   </div>
                 </div>

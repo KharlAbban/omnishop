@@ -9,6 +9,7 @@ import { CategoriesSection } from "./custom/CategoriesSection";
 import { CartItemRow } from "./custom/CartItemRow";
 import LandingHeader from "./custom/LandingHeader";
 import SignOutButton from "./custom/SignOutButton";
+import { AllProducts } from "./custom/AllProducts";
 
 export {
     ProductImageGallery,
@@ -21,5 +22,6 @@ export {
     CategoriesSection,
     CartItemRow,
     LandingHeader,
-    SignOutButton
+    SignOutButton,
+    AllProducts
 }

@@ -22,7 +22,7 @@ export function FeaturedProducts({featuredPoultry, featuredRuminants, featuredSe
               </TabsTrigger>
             ))}
           </TabsList>
-            <TabsContent value="Poultry">
+            <TabsContent value={meatCategoriesOnly[0]}>
               <div className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar">
                 {featuredPoultry.map((product) => (
                   <div key={product._id} className="flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/5">
@@ -31,7 +31,7 @@ export function FeaturedProducts({featuredPoultry, featuredRuminants, featuredSe
                 ))}
               </div>
             </TabsContent>
-            <TabsContent value="Ruminants">
+            <TabsContent value={meatCategoriesOnly[1]}>
               <div className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar">
                 {featuredRuminants.map((product) => (
                   <div key={product._id} className="flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/5">
@@ -40,7 +40,7 @@ export function FeaturedProducts({featuredPoultry, featuredRuminants, featuredSe
                 ))}
               </div>
             </TabsContent>
-            <TabsContent value="Seafood">
+            <TabsContent value={meatCategoriesOnly[2]}>
               <div className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar">
                 {featuredSeafood.map((product) => (
                   <div key={product._id} className="flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/5">

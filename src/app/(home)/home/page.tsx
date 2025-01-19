@@ -1,6 +1,6 @@
 "use client"
 
-import { HeroSection } from "@/components"
+import { AllProducts, HeroSection } from "@/components"
 import { FeaturedProducts } from "@/components"
 import { CategoriesSection } from "@/components"
 import { useAppSelector } from "@/lib/hooks"
@@ -49,7 +49,8 @@ export default function ProductsHomePage() {
   return (
       <main>
         <HeroSection />
-        <FeaturedProducts featuredPoultry={featuredPoultryProducts} featuredRuminants={featuredRuminantProducts} featuredSeafood={featuredSeafoodProducts} />
+        <FeaturedProducts featuredPoultry={featuredPoultryProducts.slice(0, 5)} featuredRuminants={featuredRuminantProducts.slice(0, 5)} featuredSeafood={featuredSeafoodProducts.slice(0, 5)} />
+        <AllProducts meatProducts={meatProducts} />
         <CategoriesSection />
       </main>
   )

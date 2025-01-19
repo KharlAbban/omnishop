@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Search, Menu, ShoppingCart } from 'lucide-react'
-
+import Form from "next/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -47,7 +47,7 @@ export function AppHeader() {
                       {category.items.map((item) => (
                         <Link
                           key={item}
-                          href="#"
+                          href="/home"
                           className="block text-muted-foreground hover:text-foreground"
                         >
                           {item}
@@ -76,7 +76,7 @@ export function AppHeader() {
                         <li key={item}>
                           <NavigationMenuLink asChild>
                             <Link
-                              href="#"
+                              href="/home"
                               className="block select-none rounded-md p-2 text-sm hover:bg-accent"
                             >
                               {item}
@@ -92,14 +92,17 @@ export function AppHeader() {
           </NavigationMenu>
         </div>
         <div className="flex items-center gap-4">
-          <div className="hidden items-center lg:flex">
-            <Search className="absolute ml-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-64 pl-9"
-            />
-        </div>
+          <Form scroll={false} action="/home/search" className="flex-1 md:flex-initial">
+            <div className="hidden items-center lg:flex">
+              <Input
+              name="searchQuery"
+                type="search"
+                placeholder="Search..."
+                className="w-64 pl-9"
+              />
+              <Search className="absolute ml-3 h-4 w-4 text-muted-foreground" />
+          </div>
+          </Form>
         <Button variant="ghost" size="icon" asChild>
             <Link href="/home/cart">
                 <ShoppingCart className="h-5 w-5" />

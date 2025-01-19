@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
       <html lang="en">
         <body
-          className="antialiased bg-gray-50 text-theme-black selection:bg-theme-yellow"
+          className="bg-gray-50 text-theme-black selection:bg-theme-yellow"
         >
           {children}
         </body>
