@@ -32,7 +32,7 @@ export default function CartPage() {
     }
 
     toast({
-      title: `Added "Cart Update`,
+      title: `Cart Update`,
       description: `Product amount updated!`,
       duration: 2000,
     });
@@ -40,12 +40,23 @@ export default function CartPage() {
 
   const handleRemove = async (productId: string) => {
     cartDispatch(removeItemFromCart(productId));
+
+    let updatedItems = items.filter(item => item.productId !== productId);
+
+    console.log(updatedItems, productId);
+    
     if (session?.user?.email) {
-      const removedItem = await cartDispatch(saveCartItems({
-        cartItems: items.filter(item => item.productId === productId),
+      await cartDispatch(saveCartItems({
+        cartItems: updatedItems,
         userEmail: session.user.email
       }));
     }
+
+    toast({
+      title: `Cart Update`,
+      description: `Product removed from cart!`,
+      duration: 2000,
+    });
   }
 
   const handleSelect = (productId: string, isSelected: boolean) => {
@@ -112,7 +123,8 @@ export default function CartPage() {
             </div>
             <div className="w-full sm:w-auto">
               <button
-                className="w-full rounded-full bg-black px-8 py-3 text-sm font-medium text-white hover:bg-black/90 sm:w-auto"
+                disabled={items.length === 0}
+                className="w-full rounded-full bg-black disabled:opacity-30 disabled:pointer-events-none px-8 py-3 text-sm font-medium text-white hover:bg-black/90 sm:w-auto"
               >
                 Proceed to Checkout
               </button>

@@ -11,11 +11,11 @@ export function CategoriesSection() {
           {meatCategoryPlusDescription.map((category) => (
             <Link
               key={category.title}
-              href="#"
+              href="/home"
               className="group relative aspect-square overflow-hidden rounded-lg border"
             >
               <Image
-                src={category.image || "/placeholder.svg"}
+                src={category.image || "/omnishop-logo.png"}
                 alt={category.title}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
