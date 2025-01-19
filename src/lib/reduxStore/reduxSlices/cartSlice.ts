@@ -1,9 +1,32 @@
 import { CartItemType, CartStateType } from "@/utils/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios"
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_SERVER_URL;
+
+if (!backendUrl) throw new Error("No backend server url found!!");
+
+export const fetchCartItems = createAsyncThunk(
+    "cart/fetchCartItems",
+    async (userEmail: string) => {
+        const cartItems = await axios.get(`${backendUrl}/api/cart/getItems/${userEmail}`);
+        return cartItems.data as CartItemType[];
+    }
+);
+
+export const saveCartItems = createAsyncThunk(
+    "cart/saveCartItems",
+    async ({cartItems, userEmail}: {cartItems: CartItemType[], userEmail: string}) => {
+        const savedItems = await axios.post(`${backendUrl}/api/cart/saveItems/${userEmail}`, cartItems);
+        return savedItems.data as CartItemType[];
+    }
+);
 
 const cartInitialState: CartStateType = {
     items: [],
-    selected: []
+    selected: [],
+    status: "idle",
+    error: null
 }
 
 const cartSlice = createSlice({
@@ -44,6 +67,31 @@ const cartSlice = createSlice({
             state.selected = action.payload ? state.items.map(item => item.productId) : []
         }
     },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetchCartItems.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(fetchCartItems.fulfilled, (state, action: PayloadAction<CartItemType[]>) => {
+            state.status = "succeeded";
+            state.items = [...action.payload];
+        })
+        .addCase(fetchCartItems.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.error.message || "Could not fetch cart items!";
+        })
+        .addCase(saveCartItems.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(saveCartItems.fulfilled, (state, action: PayloadAction<CartItemType[]>) => {
+            state.status = "succeeded";
+            state.items = [...action.payload];
+        })
+        .addCase(saveCartItems.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.error.message || "Could not save cart items!";
+        })
+    }
 });
 
 export const {
