@@ -6,6 +6,7 @@ import { Minus, Plus, Trash2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import type { CartItemType } from "@/utils/types"
+import Link from "next/link"
 
 interface CartItemProps extends CartItemType {
   onQuantityChange: (id: string, quantity: number) => void
@@ -42,7 +43,7 @@ export function CartItemRow({
           />
         </div>
         <div>
-          <h3 className="font-medium">{name}</h3>
+          <Link href={`/home/product/${productId}`}><h3 className="font-medium">{name}</h3></Link>
           <Button
             variant="ghost"
             size="sm"

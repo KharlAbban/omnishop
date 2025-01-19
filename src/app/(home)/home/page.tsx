@@ -9,8 +9,11 @@ import { AppDispatch } from "@/lib/reduxStore/reduxStore"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Loading from "./loading"
+import { fetchCartItems } from "@/lib/reduxStore/reduxSlices/cartSlice"
+import { useSession } from "next-auth/react"
 
 export default function ProductsHomePage() {
+  const {data: session} = useSession();
   const productDispatch = useDispatch<AppDispatch>();
   const {error, status, items : meatProducts} = useAppSelector(state => state.products);
 
@@ -18,6 +21,9 @@ export default function ProductsHomePage() {
   useEffect(() => {
     if (status === "idle") {
       productDispatch(fetchAllProducts());
+      if (session?.user?.email) {
+        productDispatch(fetchCartItems(session.user.email));
+      }
     }
   }, [productDispatch, status]);
 

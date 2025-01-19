@@ -3,18 +3,49 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { CartItemRow } from "@/components"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks"
-import { removeItemFromCart, toggleSelectAll, toggleSelectedItem, updateItemQuantity } from "@/lib/reduxStore/reduxSlices/cartSlice"
+import { fetchCartItems, removeItemFromCart, saveCartItems, toggleSelectAll, toggleSelectedItem, updateItemQuantity } from "@/lib/reduxStore/reduxSlices/cartSlice"
+import { useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { toast } from "@/hooks/use-toast"
 
 export default function CartPage() {
   const cartDispatch = useAppDispatch();
-  const {items, selected} = useAppSelector(state => state.cart);
+  const {data: session} = useSession();
+  const {items, selected, status} = useAppSelector(state => state.cart);
 
-  const handleQuantityChange = (productId: string, quantity: number) => {
-    cartDispatch(updateItemQuantity({productId, quantity}))
+  useEffect(() => {
+    if (session?.user?.email) {
+      cartDispatch(fetchCartItems(session.user.email));
+    }
+  }, [cartDispatch, session]);
+
+  const handleQuantityChange = async (productId: string, quantity: number) => {
+    cartDispatch(updateItemQuantity({productId, quantity}));
+
+    let updatedItems = items.map(item => item.productId === productId ? {...item, quantity} : item)
+
+    if (session?.user?.email) {
+      await cartDispatch(saveCartItems({
+        cartItems: updatedItems,
+        userEmail: session.user.email
+      }));
+    }
+
+    toast({
+      title: `Added "Cart Update`,
+      description: `Product amount updated!`,
+      duration: 2000,
+    });
   }
 
-  const handleRemove = (productId: string) => {
-    cartDispatch(removeItemFromCart(productId))
+  const handleRemove = async (productId: string) => {
+    cartDispatch(removeItemFromCart(productId));
+    if (session?.user?.email) {
+      const removedItem = await cartDispatch(saveCartItems({
+        cartItems: items.filter(item => item.productId === productId),
+        userEmail: session.user.email
+      }));
+    }
   }
 
   const handleSelect = (productId: string, isSelected: boolean) => {
@@ -28,7 +59,15 @@ export default function CartPage() {
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
-  )
+  );
+
+  if (status === "loading") {
+    return <div className="h-screen w-screen grid place-items-center">Fetching Cart items...</div>
+  }
+
+  if (status === "failed") {
+    return <div>Error fetching cart items!</div>
+  }
 
   return (
     <div className="min-h-screen bg-gray-50/50">

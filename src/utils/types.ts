@@ -3,23 +3,6 @@ export type SessionPayload = {
     expiresAt: Date;
 };
 
-export interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
-  variant?: {
-    color?: string
-    size?: string
-  }
-}
-
-export interface CartState {
-  items: CartItem[]
-  selected: string[]
-}
-
 export interface ProductType {
   _id: string,
   name: string,
@@ -46,6 +29,8 @@ export interface ProductsStateType {
 export interface CartStateType {
   items: CartItemType[],
   selected: string[]
+  status: 'idle' | 'loading' | 'succeeded' | 'failed',
+  error: string | null
 }
 
 export interface CartItemType {
