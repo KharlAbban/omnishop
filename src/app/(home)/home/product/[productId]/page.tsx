@@ -1,4 +1,4 @@
-import { ProductImageGallery } from "@/components"
+import { ProductImageGallery, RelatedProducts } from "@/components"
 import { ProductQuantitySelector } from "@/components"
 import { Badge } from '@/components/ui/badge'
 import axios from "axios";
@@ -11,7 +11,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     return <p>Product not found</p>;
   }
 
-  const {category, description, images, inStock, name, poundsLeft, pricePerPound, origin, expiryDate, storageInstructions} = productInfo.data;
+  const {_id, category, description, images, inStock, name, poundsLeft, pricePerPound, origin, expiryDate, storageInstructions} = productInfo.data;
 
   return (
     <div className="min-h-screen bg-white">
@@ -57,7 +57,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         </div>
 
         <div className="mt-16 border-t pt-16">
-          {/* <RelatedProducts /> */}
+          <RelatedProducts productCategory={category} productId={_id} />
         </div>
       </main>
     </div>
